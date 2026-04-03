@@ -1,0 +1,38 @@
+/* Brand Palette */
+:root {
+  /* Primary — forest green */
+  --color-primary: #15803d;
+  --color-primary-dark: #166534;
+  --color-primary-light: #dcfce7;
+
+  /* Semantic — light theme */
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-card: #ffffff;
+  --color-text: #111827;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-border-light: #f3f4f6;
+
+  /* Category colors */
+  --cat-mountain: #64748b;
+  --cat-lake: #3b82f6;
+  --cat-cave: #f59e0b;
+  --cat-city: #a855f7;
+  --cat-fishing: #06b6d4;
+  --cat-trail: #22c55e;
+  --cat-beach: #eab308;
+  --cat-museum: #f43f5e;
+  --cat-hiking: #10b981;
+}
+
+/* Dark Theme Overrides */
+.dark {
+  --color-bg: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-card: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+  --color-border-light: #1e293b;
+}

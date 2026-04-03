@@ -2,7 +2,8 @@
   "nav": {
     "home": "Home",
     "places": "Places",
-    "map": "Map"
+    "map": "Map",
+    "menu": "Menu"
   },
   "home": {
     "hero_title": "Discover Bulgaria",
@@ -31,7 +32,6 @@
     "filter_region": "Region",
     "all_regions": "All Regions",
     "nearby": "Nearby Places",
-    "view_on_wikipedia": "View on Wikipedia",
     "view_on_map": "View on Map",
     "elevation": "Elevation",
     "coordinates": "Coordinates",

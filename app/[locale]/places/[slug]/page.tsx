@@ -2,12 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import {
-  ArrowLeft,
-  MapPin,
-  MountainSnow,
-  Compass,
-} from "lucide-react";
+import { ArrowLeft, MapPin, MountainSnow, Compass } from "lucide-react";
 import { createServerClient } from "@/lib/supabase/server";
 import { routing } from "@/i18n/routing";
 import Badge from "@/components/ui/Badge";
@@ -47,12 +42,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!place) return { title: "Not Found" };
 
-  const name =
-    locale === "bg" && place.name_bg ? place.name_bg : place.name;
+  const name = locale === "bg" && place.name_bg ? place.name_bg : place.name;
   const description =
-    locale === "bg" && place.description_bg
-      ? place.description_bg
-      : place.description;
+    locale === "bg" && place.description_bg ? place.description_bg : place.description;
 
   return {
     title: name,
@@ -123,14 +115,9 @@ export default async function PlaceDetailPage({ params }: Props) {
 
   const coords = parseLocation(row.location as string);
   const category = row.category as Category;
-  const name =
-    locale === "bg" && row.name_bg ? row.name_bg : row.name;
-  const description =
-    locale === "bg" && row.description_bg
-      ? row.description_bg
-      : row.description;
-  const region =
-    locale === "bg" && row.region_bg ? row.region_bg : row.region;
+  const name = locale === "bg" && row.name_bg ? row.name_bg : row.name;
+  const description = locale === "bg" && row.description_bg ? row.description_bg : row.description;
+  const region = locale === "bg" && row.region_bg ? row.region_bg : row.region;
 
   /* --- fetch nearby places --- */
   const { data: nearbyRows } = await supabase.rpc("nearby_places", {
@@ -205,25 +192,24 @@ export default async function PlaceDetailPage({ params }: Props) {
         {/* ---- Back link ---- */}
         <Link
           href={`/${locale}/places`}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-green-700 hover:text-green-800 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           {t("back_to_places")}
         </Link>
 
         {/* ---- Info bar ---- */}
-        <div className="flex flex-wrap gap-6 text-sm text-gray-600">
+        <div className="flex flex-wrap gap-6 text-sm text-gray-600 dark:text-slate-400">
           {row.elevation_m != null && (
             <span className="flex items-center gap-1.5">
-              <MountainSnow className="w-4 h-4 text-gray-400" />
+              <MountainSnow className="w-4 h-4 text-gray-400 dark:text-slate-500" />
               {t("elevation")}: {row.elevation_m.toLocaleString()} {t("meters")}
             </span>
           )}
           {coords && (
             <span className="flex items-center gap-1.5">
-              <Compass className="w-4 h-4 text-gray-400" />
-              {t("coordinates")}: {coords.lat.toFixed(5)},{" "}
-              {coords.lng.toFixed(5)}
+              <Compass className="w-4 h-4 text-gray-400 dark:text-slate-500" />
+              {t("coordinates")}: {coords.lat.toFixed(5)}, {coords.lng.toFixed(5)}
             </span>
           )}
           {osmUrl && (
@@ -231,7 +217,7 @@ export default async function PlaceDetailPage({ params }: Props) {
               href={osmUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-green-700 hover:text-green-800 transition-colors"
+              className="flex items-center gap-1.5 text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors"
             >
               <MapPin className="w-4 h-4" />
               {t("view_on_osm")}
@@ -244,11 +230,11 @@ export default async function PlaceDetailPage({ params }: Props) {
           {/* Description */}
           <div className="lg:col-span-2">
             {description ? (
-              <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+              <p className="text-gray-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                 {description}
               </p>
             ) : (
-              <p className="text-gray-400 italic">{t("no_description")}</p>
+              <p className="text-gray-400 dark:text-slate-500 italic">{t("no_description")}</p>
             )}
           </div>
 
@@ -259,7 +245,7 @@ export default async function PlaceDetailPage({ params }: Props) {
                 href={osmUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                className="block rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -268,7 +254,7 @@ export default async function PlaceDetailPage({ params }: Props) {
                   className="w-full h-auto"
                   loading="lazy"
                 />
-                <span className="block px-3 py-2 text-xs text-center text-gray-500">
+                <span className="block px-3 py-2 text-xs text-center text-gray-500 dark:text-slate-400 dark:bg-slate-800">
                   {t("view_on_osm")} →
                 </span>
               </a>
@@ -283,9 +269,7 @@ export default async function PlaceDetailPage({ params }: Props) {
           locale={locale}
           heading={t("nearby")}
           emptyMessage={t("nearby_empty")}
-          distanceLabel={(distance) =>
-            t("km_away", { distance })
-          }
+          distanceLabel={(distance) => t("km_away", { distance })}
         />
       </div>
     </article>

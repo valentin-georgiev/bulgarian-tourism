@@ -28,18 +28,18 @@ export default function PlacePanel({
   onClose,
 }: Props) {
   return (
-    <div className="absolute top-0 right-0 z-[1000] h-full w-full sm:w-96 bg-white shadow-2xl border-l border-gray-200 flex flex-col animate-slide-in">
+    <div className="absolute top-0 right-0 z-[1000] h-full w-full sm:w-96 bg-white dark:bg-slate-900 shadow-2xl border-l border-gray-200 dark:border-slate-700 flex flex-col animate-slide-in">
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-white/80 backdrop-blur-sm shadow hover:bg-gray-100 transition-colors"
+        className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
         aria-label={closeLabel}
       >
-        <X className="w-5 h-5 text-gray-600" />
+        <X className="w-5 h-5 text-gray-600 dark:text-slate-300" />
       </button>
 
       {/* Image */}
-      <div className="relative h-48 bg-gray-100 shrink-0">
+      <div className="relative h-48 bg-gray-100 dark:bg-slate-700 shrink-0">
         {place.image_url ? (
           <Image
             src={place.image_url}
@@ -49,7 +49,7 @@ export default function PlacePanel({
             sizes="384px"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-300 text-5xl select-none">
+          <div className="w-full h-full flex items-center justify-center text-gray-300 dark:text-slate-500 text-5xl select-none">
             🇧🇬
           </div>
         )}
@@ -61,31 +61,31 @@ export default function PlacePanel({
           <Badge category={place.category} label={categoryLabel} />
         </div>
 
-        <h2 className="text-xl font-bold text-gray-900">{place.name}</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100">{place.name}</h2>
 
         {place.region && (
-          <p className="flex items-center gap-1.5 text-sm text-gray-500">
+          <p className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-slate-400">
             <MapPin className="w-4 h-4" />
             {place.region}
           </p>
         )}
 
         {place.elevation_m != null && (
-          <p className="flex items-center gap-1.5 text-sm text-gray-500">
+          <p className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-slate-400">
             <MountainSnow className="w-4 h-4" />
             {elevationLabel}: {place.elevation_m.toLocaleString()} {metersLabel}
           </p>
         )}
 
         {place.description && (
-          <p className="text-sm text-gray-600 leading-relaxed line-clamp-6">
+          <p className="text-sm text-gray-600 dark:text-slate-300 leading-relaxed line-clamp-6">
             {place.description}
           </p>
         )}
       </div>
 
       {/* View details link */}
-      <div className="p-4 border-t border-gray-100 shrink-0">
+      <div className="p-4 border-t border-gray-100 dark:border-slate-700 shrink-0">
         <Link
           href={`/${locale}/places/${place.slug}`}
           className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-green-700 text-white text-sm font-medium rounded-full hover:bg-green-800 transition-colors"

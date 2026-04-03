@@ -2,7 +2,8 @@
   "nav": {
     "home": "Начало",
     "places": "Места",
-    "map": "Карта"
+    "map": "Карта",
+    "menu": "Меню"
   },
   "home": {
     "hero_title": "Открийте България",
@@ -31,7 +32,6 @@
     "filter_region": "Регион",
     "all_regions": "Всички региони",
     "nearby": "Близки места",
-    "view_on_wikipedia": "Виж в Уикипедия",
     "view_on_map": "Виж на картата",
     "elevation": "Надморска височина",
     "coordinates": "Координати",
