@@ -1,6 +1,6 @@
 {
   "name": "bulgarian-tourism",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,15 +12,20 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.100.1",
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
     "lucide-react": "^1.7.0",
     "next": "16.2.1",
     "next-intl": "^4.8.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-leaflet": "^5.0.0",
     "transliteration": "^2.6.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/leaflet": "^1.9.21",
+    "@types/leaflet.markercluster": "^1.5.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

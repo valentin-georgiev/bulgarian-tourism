@@ -35,7 +35,20 @@
     "view_on_map": "View on Map",
     "elevation": "Elevation",
     "coordinates": "Coordinates",
-    "load_more": "Load More"
+    "load_more": "Load More",
+    "back_to_places": "Back to Places",
+    "no_description": "No description available.",
+    "nearby_empty": "No nearby places found.",
+    "view_on_osm": "View on OpenStreetMap",
+    "meters": "m",
+    "km_away": "{distance} km away"
+  },
+  "map": {
+    "title": "Map",
+    "filter_by_category": "Filter by category",
+    "view_details": "View details",
+    "close": "Close",
+    "places_count": "{count} places"
   },
   "footer": {
     "tagline": "Open-source Bulgarian tourism guide.",

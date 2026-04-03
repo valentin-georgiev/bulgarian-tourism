@@ -35,7 +35,20 @@
     "view_on_map": "Виж на картата",
     "elevation": "Надморска височина",
     "coordinates": "Координати",
-    "load_more": "Зареди още"
+    "load_more": "Зареди още",
+    "back_to_places": "Обратно към местата",
+    "no_description": "Няма налично описание.",
+    "nearby_empty": "Няма намерени близки места.",
+    "view_on_osm": "Вижте в OpenStreetMap",
+    "meters": "м",
+    "km_away": "на {distance} км"
+  },
+  "map": {
+    "title": "Карта",
+    "filter_by_category": "Филтър по категория",
+    "view_details": "Виж детайли",
+    "close": "Затвори",
+    "places_count": "{count} места"
   },
   "footer": {
     "tagline": "Туристически пътеводител с отворен код.",
