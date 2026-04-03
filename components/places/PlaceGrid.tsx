@@ -1,5 +1,5 @@
-import PlaceCard from "./PlaceCard";
 import type { Category } from "@/types/place";
+import PlaceCard from "./PlaceCard";
 
 type PlaceItem = {
   id: string;
