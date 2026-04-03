@@ -19,7 +19,7 @@ type Props = {
 
 export default function PlaceGrid({ places, categoryLabels, locale, emptyMessage }: Props) {
   if (places.length === 0) {
-    return <p className="text-center text-gray-500 py-16">{emptyMessage}</p>;
+    return <p className="text-center text-gray-500 dark:text-slate-400 py-16">{emptyMessage}</p>;
   }
 
   return (

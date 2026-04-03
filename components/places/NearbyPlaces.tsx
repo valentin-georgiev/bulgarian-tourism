@@ -21,20 +21,19 @@ export default function NearbyPlaces({
   if (places.length === 0) {
     return (
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">{heading}</h2>
-        <p className="text-gray-500">{emptyMessage}</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-6">{heading}</h2>
+        <p className="text-gray-500 dark:text-slate-400">{emptyMessage}</p>
       </div>
     );
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">{heading}</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-6">{heading}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {places.map((place) => {
           const km = (place.distance_m / 1000).toFixed(1);
-          const displayName =
-            locale === "bg" && place.name_bg ? place.name_bg : place.name;
+          const displayName = locale === "bg" && place.name_bg ? place.name_bg : place.name;
 
           return (
             <div key={place.id} className="flex flex-col gap-1">
@@ -47,7 +46,7 @@ export default function NearbyPlaces({
                 image_url={place.image_url}
                 locale={locale}
               />
-              <p className="text-xs text-gray-500 text-center mt-1">
+              <p className="text-xs text-gray-500 dark:text-slate-400 text-center mt-1">
                 {distanceLabel(km)}
               </p>
             </div>

@@ -44,17 +44,12 @@ export default async function MapPage({ params }: Props) {
   /* Try RPC first (requires migration 007), fall back to raw select + WKB parse */
   let places: MapPlace[] = [];
 
-  const { data: rpcData, error: rpcError } = await supabase.rpc(
-    "get_map_places"
-  );
+  const { data: rpcData, error: rpcError } = await supabase.rpc("get_map_places");
 
   if (!rpcError && rpcData) {
     places = (rpcData as Record<string, unknown>[]).map((row) => ({
       id: row.id as string,
-      name:
-        locale === "bg" && row.name_bg
-          ? (row.name_bg as string)
-          : (row.name as string),
+      name: locale === "bg" && row.name_bg ? (row.name_bg as string) : (row.name as string),
       slug: row.slug as string,
       category: row.category as Category,
       image_url: row.image_url as string | null,
@@ -86,10 +81,7 @@ export default async function MapPage({ params }: Props) {
           if (!coords) return null;
           return {
             id: row.id as string,
-            name:
-              locale === "bg" && row.name_bg
-                ? (row.name_bg as string)
-                : (row.name as string),
+            name: locale === "bg" && row.name_bg ? (row.name_bg as string) : (row.name as string),
             slug: row.slug as string,
             category: row.category as Category,
             image_url: row.image_url as string | null,

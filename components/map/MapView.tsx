@@ -37,11 +37,7 @@ type Props = {
   onSelectPlace: (place: MapPlace) => void;
 };
 
-export default function MapView({
-  places,
-  activeCategories,
-  onSelectPlace,
-}: Props) {
+export default function MapView({ places, activeCategories, onSelectPlace }: Props) {
   const mapRef = useRef<L.Map | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const clusterRef = useRef<L.MarkerClusterGroup | null>(null);
@@ -58,8 +54,7 @@ export default function MapView({
     });
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       maxZoom: 18,
     }).addTo(map);
 
@@ -118,10 +113,6 @@ export default function MapView({
   }, [places, activeCategories, onSelectPlace]);
 
   return (
-    <div
-      ref={containerRef}
-      className="absolute inset-0 z-0"
-      style={{ background: "#e5e7eb" }}
-    />
+    <div ref={containerRef} className="absolute inset-0 z-0" style={{ background: "#e5e7eb" }} />
   );
 }
