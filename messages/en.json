@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "home": "Home",
+    "places": "Places",
+    "map": "Map"
+  },
+  "home": {
+    "hero_title": "Discover Bulgaria",
+    "hero_subtitle": "Explore mountains, lakes, caves, cities, beaches, museums, hiking trails, and more across Bulgaria.",
+    "cta_explore": "Explore Places",
+    "cta_map": "Open Map",
+    "about_title": "About This Project",
+    "about_text": "An open-source portfolio project built with Next.js, Supabase, and OpenStreetMap data. Browse and discover the natural and cultural highlights of Bulgaria."
+  },
+  "categories": {
+    "all": "All",
+    "lake": "Lakes",
+    "mountain": "Mountains",
+    "cave": "Caves",
+    "city": "Cities",
+    "fishing": "Fishing",
+    "trail": "Trails",
+    "beach": "Beaches",
+    "museum": "Museums",
+    "hiking": "Hiking"
+  },
+  "places": {
+    "title": "Places",
+    "no_results": "No places found.",
+    "filter_category": "Category",
+    "filter_region": "Region",
+    "all_regions": "All Regions",
+    "nearby": "Nearby Places",
+    "view_on_wikipedia": "View on Wikipedia",
+    "view_on_map": "View on Map",
+    "elevation": "Elevation",
+    "coordinates": "Coordinates",
+    "load_more": "Load More"
+  },
+  "footer": {
+    "tagline": "Open-source Bulgarian tourism guide.",
+    "data_sources": "Data Sources",
+    "license": "MIT License"
+  }
+}
