@@ -1,4 +1,4 @@
-export type Category = 'lake' | 'mountain' | 'cave' | 'city' | 'fishing' | 'trail';
+export type Category = 'lake' | 'mountain' | 'cave' | 'city' | 'fishing' | 'trail' | 'beach' | 'museum' | 'hiking';
 
 export type Region = string;
 
@@ -10,6 +10,7 @@ export interface Place {
   slug: string;
   category: Category;
   region: string | null;
+  region_bg: string | null;
   description: string | null;
   description_bg: string | null;
   image_url: string | null;
@@ -17,7 +18,6 @@ export interface Place {
   latitude: number;
   longitude: number;
   elevation_m: number | null;
-  tags: Record<string, string>;
   created_at: string;
 }
 
@@ -29,13 +29,13 @@ export interface PlaceRow {
   slug: string;
   category: string;
   region: string | null;
+  region_bg: string | null;
   description: string | null;
   description_bg: string | null;
   image_url: string | null;
   wikipedia: string | null;
   location: string; // PostGIS geography — returned as WKT or GeoJSON from Supabase
   elevation_m: number | null;
-  tags: Record<string, string>;
   created_at: string;
 }
 
