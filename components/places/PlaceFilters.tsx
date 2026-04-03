@@ -1,27 +1,10 @@
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import type { Category } from "@/types/place";
+import { ALL_CATEGORIES } from "@/constants/categories";
+import type { PlaceFiltersProps } from "@/types/components";
 
-const CATEGORIES: Category[] = [
-  "mountain",
-  "lake",
-  "cave",
-  "city",
-  "fishing",
-  "trail",
-  "beach",
-  "museum",
-  "hiking",
-];
-
-type Props = {
-  categoryLabels: Record<"all" | Category, string>;
-  allRegionsLabel: string;
-  regions: string[];
-};
-
-export default function PlaceFilters({ categoryLabels, allRegionsLabel, regions }: Props) {
+const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions }: PlaceFiltersProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -29,7 +12,7 @@ export default function PlaceFilters({ categoryLabels, allRegionsLabel, regions 
   const activeCategory = searchParams.get("category") ?? "";
   const activeRegion = searchParams.get("region") ?? "";
 
-  function setParam(key: string, value: string) {
+  const setParam = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (value) {
       params.set(key, value);
@@ -39,7 +22,7 @@ export default function PlaceFilters({ categoryLabels, allRegionsLabel, regions 
     // Reset page when filter changes
     params.delete("page");
     router.push(`${pathname}?${params.toString()}`);
-  }
+  };
 
   return (
     <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
@@ -55,7 +38,7 @@ export default function PlaceFilters({ categoryLabels, allRegionsLabel, regions 
         >
           {categoryLabels["all"]}
         </button>
-        {CATEGORIES.map((cat) => (
+        {ALL_CATEGORIES.map((cat) => (
           <button
             key={cat}
             onClick={() => setParam("category", activeCategory === cat ? "" : cat)}
@@ -87,4 +70,6 @@ export default function PlaceFilters({ categoryLabels, allRegionsLabel, regions 
       )}
     </div>
   );
-}
+};
+
+export default PlaceFilters;

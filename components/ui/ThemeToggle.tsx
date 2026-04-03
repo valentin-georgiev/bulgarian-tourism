@@ -3,7 +3,7 @@
 import { useSyncExternalStore, useCallback } from "react";
 import { Sun, Moon } from "lucide-react";
 
-function subscribe(callback: () => void) {
+const subscribe = (callback: () => void) => {
   /* Listen for class changes on <html> from other sources */
   const observer = new MutationObserver(callback);
   observer.observe(document.documentElement, {
@@ -11,17 +11,17 @@ function subscribe(callback: () => void) {
     attributeFilter: ["class"],
   });
   return () => observer.disconnect();
-}
+};
 
-function getSnapshot() {
+const getSnapshot = () => {
   return document.documentElement.classList.contains("dark");
-}
+};
 
-function getServerSnapshot() {
+const getServerSnapshot = () => {
   return false;
-}
+};
 
-export default function ThemeToggle() {
+const ThemeToggle = () => {
   const dark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const toggle = useCallback(() => {
@@ -39,4 +39,6 @@ export default function ThemeToggle() {
       {dark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
     </button>
   );
-}
+};
+
+export default ThemeToggle;

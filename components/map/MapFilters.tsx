@@ -1,49 +1,18 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { Category } from "@/types/place";
+import { ALL_CATEGORIES } from "@/constants/categories";
+import { CHIP_COLORS } from "@/constants/categoryStyles";
+import type { MapFiltersProps } from "@/types/components";
 
-const ALL_CATEGORIES: Category[] = [
-  "mountain",
-  "lake",
-  "cave",
-  "city",
-  "fishing",
-  "trail",
-  "beach",
-  "museum",
-  "hiking",
-];
-
-const CHIP_COLORS: Record<Category, { active: string; inactive: string }> = {
-  mountain: { active: "bg-slate-600 text-white", inactive: "bg-slate-100 text-slate-600" },
-  lake: { active: "bg-blue-600 text-white", inactive: "bg-blue-100 text-blue-600" },
-  cave: { active: "bg-amber-600 text-white", inactive: "bg-amber-100 text-amber-600" },
-  city: { active: "bg-purple-600 text-white", inactive: "bg-purple-100 text-purple-600" },
-  fishing: { active: "bg-cyan-600 text-white", inactive: "bg-cyan-100 text-cyan-600" },
-  trail: { active: "bg-green-600 text-white", inactive: "bg-green-100 text-green-600" },
-  beach: { active: "bg-yellow-600 text-white", inactive: "bg-yellow-100 text-yellow-600" },
-  museum: { active: "bg-rose-600 text-white", inactive: "bg-rose-100 text-rose-600" },
-  hiking: { active: "bg-emerald-600 text-white", inactive: "bg-emerald-100 text-emerald-600" },
-};
-
-type Props = {
-  activeCategories: Set<Category>;
-  categoryLabels: Record<Category, string>;
-  allLabel: string;
-  onToggle: (category: Category) => void;
-  onToggleAll: () => void;
-  placesCount: number;
-};
-
-export default function MapFilters({
+const MapFilters = ({
   activeCategories,
   categoryLabels,
   allLabel,
   onToggle,
   onToggleAll,
   placesCount,
-}: Props) {
+}: MapFiltersProps) => {
   const t = useTranslations("map");
   const allActive = activeCategories.size === ALL_CATEGORIES.length;
 
@@ -85,4 +54,6 @@ export default function MapFilters({
       </span>
     </div>
   );
-}
+};
+
+export default MapFilters;

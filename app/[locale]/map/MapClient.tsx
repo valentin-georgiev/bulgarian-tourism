@@ -4,7 +4,9 @@ import { useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import MapFilters from "@/components/map/MapFilters";
 import PlacePanel from "@/components/map/PlacePanel";
-import type { MapPlace } from "@/components/map/MapView";
+import { ALL_CATEGORIES } from "@/constants/categories";
+import type { MapPlace } from "@/types/map";
+import type { MapClientProps } from "@/types/components";
 import type { Category } from "@/types/place";
 
 /* Leaflet must only run in the browser — dynamic import with SSR disabled */
@@ -17,30 +19,7 @@ const MapView = dynamic(() => import("@/components/map/MapView"), {
   ),
 });
 
-const ALL_CATEGORIES: Category[] = [
-  "mountain",
-  "lake",
-  "cave",
-  "city",
-  "fishing",
-  "trail",
-  "beach",
-  "museum",
-  "hiking",
-];
-
-type Props = {
-  places: MapPlace[];
-  locale: string;
-  categoryLabels: Record<Category, string>;
-  allLabel: string;
-  viewDetailsLabel: string;
-  closeLabel: string;
-  elevationLabel: string;
-  metersLabel: string;
-};
-
-export default function MapClient({
+const MapClient = ({
   places,
   locale,
   categoryLabels,
@@ -49,7 +28,7 @@ export default function MapClient({
   closeLabel,
   elevationLabel,
   metersLabel,
-}: Props) {
+}: MapClientProps) => {
   const [activeCategories, setActiveCategories] = useState<Set<Category>>(
     () => new Set(ALL_CATEGORIES)
   );
@@ -120,4 +99,6 @@ export default function MapClient({
       )}
     </>
   );
-}
+};
+
+export default MapClient;

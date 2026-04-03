@@ -1,9 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import { createServerClient } from "@/lib/supabase/server";
 import { parseWkbPoint } from "@/lib/parseWkb";
+import { ALL_CATEGORIES } from "@/constants/categories";
 import type { Metadata } from "next";
 import type { Category } from "@/types/place";
-import type { MapPlace } from "@/components/map/MapView";
+import type { MapPlace } from "@/types/map";
 import MapClient from "./MapClient";
 
 type Props = {
@@ -23,21 +24,10 @@ export default async function MapPage({ params }: Props) {
   const tc = await getTranslations("categories");
   const tp = await getTranslations("places");
 
-  const categoryLabels = Object.fromEntries(
-    (
-      [
-        "mountain",
-        "lake",
-        "cave",
-        "city",
-        "fishing",
-        "trail",
-        "beach",
-        "museum",
-        "hiking",
-      ] as Category[]
-    ).map((c) => [c, tc(c)])
-  ) as Record<Category, string>;
+  const categoryLabels = Object.fromEntries(ALL_CATEGORIES.map((c) => [c, tc(c)])) as Record<
+    Category,
+    string
+  >;
 
   const supabase = createServerClient();
 

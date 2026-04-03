@@ -1,23 +1,7 @@
-import type { Category } from "@/types/place";
+import type { PlaceGridProps } from "@/types/components";
 import PlaceCard from "./PlaceCard";
 
-type PlaceItem = {
-  id: string;
-  slug: string;
-  name: string;
-  category: Category;
-  region: string | null;
-  image_url: string | null;
-};
-
-type Props = {
-  places: PlaceItem[];
-  categoryLabels: Record<Category, string>;
-  locale: string;
-  emptyMessage: string;
-};
-
-export default function PlaceGrid({ places, categoryLabels, locale, emptyMessage }: Props) {
+const PlaceGrid = ({ places, categoryLabels, locale, emptyMessage }: PlaceGridProps) => {
   if (places.length === 0) {
     return <p className="text-center text-gray-500 dark:text-slate-400 py-16">{emptyMessage}</p>;
   }
@@ -38,4 +22,6 @@ export default function PlaceGrid({ places, categoryLabels, locale, emptyMessage
       ))}
     </div>
   );
-}
+};
+
+export default PlaceGrid;

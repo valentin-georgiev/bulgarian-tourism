@@ -1,23 +1,14 @@
 import PlaceCard from "@/components/places/PlaceCard";
-import type { Category, NearbyPlace } from "@/types/place";
+import type { NearbyPlacesProps } from "@/types/components";
 
-type Props = {
-  places: (NearbyPlace & { name_bg?: string | null; region_bg?: string | null })[];
-  categoryLabels: Record<Category, string>;
-  locale: string;
-  heading: string;
-  emptyMessage: string;
-  distanceLabel: (distance: string) => string;
-};
-
-export default function NearbyPlaces({
+const NearbyPlaces = ({
   places,
   categoryLabels,
   locale,
   heading,
   emptyMessage,
   distanceLabel,
-}: Props) {
+}: NearbyPlacesProps) => {
   if (places.length === 0) {
     return (
       <div>
@@ -55,4 +46,6 @@ export default function NearbyPlaces({
       </div>
     </div>
   );
-}
+};
+
+export default NearbyPlaces;
