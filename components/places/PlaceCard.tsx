@@ -2,19 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin } from "lucide-react";
 import Badge from "@/components/ui/Badge";
-import type { Category } from "@/types/place";
+import type { PlaceCardProps } from "@/types/components";
 
-type Props = {
-  slug: string;
-  name: string;
-  category: Category;
-  categoryLabel: string;
-  region: string | null;
-  image_url: string | null;
-  locale: string;
-};
-
-export default function PlaceCard({
+const PlaceCard = ({
   slug,
   name,
   category,
@@ -22,7 +12,7 @@ export default function PlaceCard({
   region,
   image_url,
   locale,
-}: Props) {
+}: PlaceCardProps) => {
   return (
     <Link
       href={`/${locale}/places/${slug}`}
@@ -60,4 +50,6 @@ export default function PlaceCard({
       </div>
     </Link>
   );
-}
+};
+
+export default PlaceCard;

@@ -7,7 +7,7 @@
  *   bytes 9-16 : X (longitude) as float64
  *   bytes 17-24: Y (latitude) as float64
  */
-export function parseWkbPoint(hex: string): { lat: number; lng: number } | null {
+export const parseWkbPoint = (hex: string): { lat: number; lng: number } | null => {
   if (!hex || hex.length < 50) return null;
 
   try {
@@ -35,4 +35,4 @@ export function parseWkbPoint(hex: string): { lat: number; lng: number } | null 
   } catch {
     return null;
   }
-}
+};

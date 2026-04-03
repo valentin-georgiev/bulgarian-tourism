@@ -4,20 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { X, MapPin, MountainSnow, ArrowRight } from "lucide-react";
 import Badge from "@/components/ui/Badge";
-import type { MapPlace } from "@/components/map/MapView";
+import type { PlacePanelProps } from "@/types/components";
 
-type Props = {
-  place: MapPlace;
-  locale: string;
-  categoryLabel: string;
-  viewDetailsLabel: string;
-  closeLabel: string;
-  elevationLabel: string;
-  metersLabel: string;
-  onClose: () => void;
-};
-
-export default function PlacePanel({
+const PlacePanel = ({
   place,
   locale,
   categoryLabel,
@@ -26,7 +15,7 @@ export default function PlacePanel({
   elevationLabel,
   metersLabel,
   onClose,
-}: Props) {
+}: PlacePanelProps) => {
   return (
     <div className="absolute top-0 right-0 z-[1000] h-full w-full sm:w-96 bg-white dark:bg-slate-900 shadow-2xl border-l border-gray-200 dark:border-slate-700 flex flex-col animate-slide-in">
       {/* Close button */}
@@ -110,4 +99,6 @@ export default function PlacePanel({
       `}</style>
     </div>
   );
-}
+};
+
+export default PlacePanel;

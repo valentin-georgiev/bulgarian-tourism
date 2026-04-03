@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { ArrowLeft, MapPin, MountainSnow, Compass } from "lucide-react";
 import { createServerClient } from "@/lib/supabase/server";
 import { routing } from "@/i18n/routing";
+import { ALL_CATEGORIES } from "@/constants/categories";
 import Badge from "@/components/ui/Badge";
 import NearbyPlaces from "@/components/places/NearbyPlaces";
 import type { Metadata } from "next";
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 /* ---------- helpers ---------- */
 
-function parseLocation(location: string): { lat: number; lng: number } | null {
+const parseLocation = (location: string): { lat: number; lng: number } | null => {
   // Supabase returns geography as GeoJSON: {"type":"Point","coordinates":[lng,lat]}
   try {
     const geo = JSON.parse(location);
@@ -70,7 +71,7 @@ function parseLocation(location: string): { lat: number; lng: number } | null {
     }
   }
   return null;
-}
+};
 
 /* ---------- page ---------- */
 
@@ -84,21 +85,10 @@ export default async function PlaceDetailPage({ params }: Props) {
   const t = await getTranslations("places");
   const tc = await getTranslations("categories");
 
-  const categoryLabels = Object.fromEntries(
-    (
-      [
-        "mountain",
-        "lake",
-        "cave",
-        "city",
-        "fishing",
-        "trail",
-        "beach",
-        "museum",
-        "hiking",
-      ] as Category[]
-    ).map((c) => [c, tc(c)])
-  ) as Record<Category, string>;
+  const categoryLabels = Object.fromEntries(ALL_CATEGORIES.map((c) => [c, tc(c)])) as Record<
+    Category,
+    string
+  >;
 
   const supabase = createServerClient();
 

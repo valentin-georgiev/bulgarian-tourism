@@ -3,41 +3,10 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet.markercluster";
-import type { Category } from "@/types/place";
+import { CATEGORY_COLORS } from "@/constants/categoryStyles";
+import type { MapViewProps } from "@/types/components";
 
-export interface MapPlace {
-  id: string;
-  name: string;
-  slug: string;
-  category: Category;
-  image_url: string | null;
-  region: string | null;
-  description: string | null;
-  elevation_m: number | null;
-  lat: number;
-  lng: number;
-}
-
-/* Category → marker colour (Tailwind-ish hex equivalents) */
-const CATEGORY_COLORS: Record<Category, string> = {
-  mountain: "#64748b",
-  lake: "#3b82f6",
-  cave: "#f59e0b",
-  city: "#a855f7",
-  fishing: "#06b6d4",
-  trail: "#22c55e",
-  beach: "#eab308",
-  museum: "#f43f5e",
-  hiking: "#10b981",
-};
-
-type Props = {
-  places: MapPlace[];
-  activeCategories: Set<Category>;
-  onSelectPlace: (place: MapPlace) => void;
-};
-
-export default function MapView({ places, activeCategories, onSelectPlace }: Props) {
+const MapView = ({ places, activeCategories, onSelectPlace }: MapViewProps) => {
   const mapRef = useRef<L.Map | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const clusterRef = useRef<L.MarkerClusterGroup | null>(null);
@@ -115,4 +84,6 @@ export default function MapView({ places, activeCategories, onSelectPlace }: Pro
   return (
     <div ref={containerRef} className="absolute inset-0 z-0" style={{ background: "#e5e7eb" }} />
   );
-}
+};
+
+export default MapView;

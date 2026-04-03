@@ -1,72 +1,14 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import {
-  Waves,
-  Mountain,
-  Flame,
-  Building2,
-  Fish,
-  Footprints,
-  Umbrella,
-  Map,
-  Landmark,
-  TreePine,
-} from "lucide-react";
+import { Map } from "lucide-react";
+import { CATEGORY_ICONS } from "@/constants/categoryStyles";
 import type { Category } from "@/types/place";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-const CATEGORY_ICONS = [
-  {
-    key: "mountain",
-    icon: Mountain,
-    color: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
-  },
-  {
-    key: "lake",
-    icon: Waves,
-    color: "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300",
-  },
-  {
-    key: "cave",
-    icon: Flame,
-    color: "bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300",
-  },
-  {
-    key: "city",
-    icon: Building2,
-    color: "bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300",
-  },
-  {
-    key: "fishing",
-    icon: Fish,
-    color: "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/50 dark:text-cyan-300",
-  },
-  {
-    key: "trail",
-    icon: Footprints,
-    color: "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300",
-  },
-  {
-    key: "beach",
-    icon: Umbrella,
-    color: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300",
-  },
-  {
-    key: "museum",
-    icon: Landmark,
-    color: "bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300",
-  },
-  {
-    key: "hiking",
-    icon: TreePine,
-    color: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300",
-  },
-];
-
-export default async function HomePage({ params }: Props) {
+const HomePage = async ({ params }: Props) => {
   const { locale } = await params;
   const t = await getTranslations("home");
   const tc = await getTranslations("categories");
@@ -106,8 +48,8 @@ export default async function HomePage({ params }: Props) {
       {/* Category cards */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-4">
-          {CATEGORY_ICONS.map(({ key, icon: categoryIcon, color }, index) => {
-            const IconComponent = categoryIcon;
+          {CATEGORY_ICONS.map(({ key, icon, color }, index) => {
+            const CategoryIcon = icon;
             return (
               <Link
                 key={key}
@@ -115,7 +57,7 @@ export default async function HomePage({ params }: Props) {
                 className={`flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-gray-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all animate-slide-up stagger-${index + 1}`}
               >
                 <span className={`p-3 rounded-xl ${color}`}>
-                  <IconComponent className="w-6 h-6" />
+                  <CategoryIcon className="w-6 h-6" />
                 </span>
                 <span className="text-sm font-medium text-gray-700 dark:text-slate-300">
                   {tc(key as Category)}
@@ -145,4 +87,6 @@ export default async function HomePage({ params }: Props) {
       </section>
     </>
   );
-}
+};
+
+export default HomePage;

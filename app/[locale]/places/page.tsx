@@ -1,11 +1,10 @@
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { createServerClient } from "@/lib/supabase/server";
+import { ALL_CATEGORIES, PAGE_SIZE } from "@/constants/categories";
 import PlaceGrid from "@/components/places/PlaceGrid";
 import PlaceFilters from "@/components/places/PlaceFilters";
 import type { Category } from "@/types/place";
-
-const PAGE_SIZE = 24;
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -19,18 +18,10 @@ export default async function PlacesPage({ params, searchParams }: Props) {
   const t = await getTranslations("places");
   const tc = await getTranslations("categories");
 
-  const categoryLabels: Record<"all" | Category, string> = {
+  const categoryLabels = {
     all: tc("all"),
-    mountain: tc("mountain"),
-    lake: tc("lake"),
-    cave: tc("cave"),
-    city: tc("city"),
-    fishing: tc("fishing"),
-    trail: tc("trail"),
-    beach: tc("beach"),
-    museum: tc("museum"),
-    hiking: tc("hiking"),
-  };
+    ...Object.fromEntries(ALL_CATEGORIES.map((c) => [c, tc(c)])),
+  } as Record<"all" | Category, string>;
 
   const currentPage = Math.max(1, parseInt(page ?? "1", 10));
   const from = (currentPage - 1) * PAGE_SIZE;
@@ -38,24 +29,21 @@ export default async function PlacesPage({ params, searchParams }: Props) {
 
   const supabase = createServerClient();
 
-  // Fetch places with filters
-  let query = supabase
+  // Build places query with filters
+  let placesQuery = supabase
     .from("places")
     .select("id, slug, name, name_bg, category, region, image_url")
     .order("name")
     .range(from, to);
 
-  if (category) query = query.eq("category", category);
-  if (region) query = query.eq("region", region);
+  if (category) placesQuery = placesQuery.eq("category", category);
+  if (region) placesQuery = placesQuery.eq("region", region);
 
-  const { data: places } = await query;
-
-  // Fetch distinct non-null regions for the dropdown
-  const { data: regionRows } = await supabase
-    .from("places")
-    .select("region")
-    .not("region", "is", null)
-    .order("region");
+  // Fetch places and regions in parallel (independent queries)
+  const [{ data: places }, { data: regionRows }] = await Promise.all([
+    placesQuery,
+    supabase.from("places").select("region").not("region", "is", null).order("region"),
+  ]);
 
   const regions = [...new Set((regionRows ?? []).map((r) => r.region as string))];
 

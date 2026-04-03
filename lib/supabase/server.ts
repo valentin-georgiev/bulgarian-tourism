@@ -5,6 +5,6 @@ const supabasePublishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFA
 
 // Server client for use in React Server Components and Route Handlers.
 // Creates a new instance per call (no singleton — safe for concurrent requests).
-export function createServerClient() {
+export const createServerClient = () => {
   return createClient(supabaseUrl, supabasePublishableKey);
-}
+};

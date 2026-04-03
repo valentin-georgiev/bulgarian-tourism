@@ -6,14 +6,14 @@ import { useTranslations, useLocale } from "next-intl";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
-export default function MobileMenu() {
+const MobileMenu = () => {
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
   const locale = useLocale();
 
-  function close() {
+  const close = () => {
     setOpen(false);
-  }
+  };
 
   return (
     <>
@@ -95,4 +95,6 @@ export default function MobileMenu() {
       )}
     </>
   );
-}
+};
+
+export default MobileMenu;

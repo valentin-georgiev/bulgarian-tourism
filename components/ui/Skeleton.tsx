@@ -2,7 +2,7 @@
  * Loading skeleton components matching PlaceCard dimensions.
  */
 
-export function SkeletonCard() {
+export const SkeletonCard = () => {
   return (
     <div className="rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800">
       {/* Image placeholder */}
@@ -14,13 +14,13 @@ export function SkeletonCard() {
       </div>
     </div>
   );
-}
+};
 
-export function SkeletonText({ className = "" }: { className?: string }) {
+export const SkeletonText = ({ className = "" }: { className?: string }) => {
   return <div className={`h-4 rounded skeleton-shimmer ${className}`} />;
-}
+};
 
-export function SkeletonGrid({ count = 8 }: { count?: number }) {
+export const SkeletonGrid = ({ count = 8 }: { count?: number }) => {
   /* eslint-disable react/no-array-index-key -- static placeholder items have no stable ID */
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -30,4 +30,4 @@ export function SkeletonGrid({ count = 8 }: { count?: number }) {
     </div>
   );
   /* eslint-enable react/no-array-index-key */
-}
+};
