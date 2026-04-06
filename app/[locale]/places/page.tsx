@@ -4,12 +4,25 @@ import { createServerClient } from "@/lib/supabase/server";
 import { ALL_CATEGORIES, PAGE_SIZE } from "@/constants/categories";
 import PlaceGrid from "@/components/places/PlaceGrid";
 import PlaceFilters from "@/components/places/PlaceFilters";
+import type { Metadata } from "next";
 import type { Category } from "@/types/place";
 
 type Props = {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ category?: string; region?: string; page?: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "places" });
+  return {
+    title: t("title"),
+    description:
+      locale === "bg"
+        ? "Разгледайте планини, езера, пещери, градове и още в цяла България."
+        : "Browse mountains, lakes, caves, cities, and more across Bulgaria.",
+  };
+}
 
 export default async function PlacesPage({ params, searchParams }: Props) {
   const { locale } = await params;
