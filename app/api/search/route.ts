@@ -1,26 +1,36 @@
 import { type NextRequest } from "next/server";
 import { createServerClient } from "@/lib/supabase/server";
 import { parseWkbPoint } from "@/lib/parseWkb";
-import { jsonResponse, jsonError, parseIntParam, validateCategory } from "@/lib/api";
+import { jsonResponse, jsonError, jsonRateLimited, getClientIp, escapeIlike } from "@/lib/api";
+import { searchQuerySchema } from "@/lib/api/validation";
+import { searchLimiter } from "@/lib/api/rateLimit";
 
 /**
  * GET /api/search?q=...
  *
  * Query params:
- *   q         — search query (required, min 1 char)
+ *   q         — search query (required, 2–100 chars)
  *   category  — optional category filter
  *   limit     — max results (default 20, max 50)
  */
 export async function GET(request: NextRequest) {
+  const ip = getClientIp(request);
+  const rl = searchLimiter(ip);
+  if (rl.limited) return jsonRateLimited(rl.retryAfter);
+
   const { searchParams } = request.nextUrl;
 
-  const q = searchParams.get("q")?.trim();
-  if (!q || q.length === 0) {
-    return jsonError("Query parameter 'q' is required", 400);
+  const parsed = searchQuerySchema.safeParse({
+    q: searchParams.get("q") ?? "",
+    category: searchParams.get("category") ?? undefined,
+    limit: searchParams.get("limit") ?? undefined,
+  });
+
+  if (!parsed.success) {
+    return jsonError(parsed.error.issues.map((i) => i.message).join(", "), 400);
   }
 
-  const category = validateCategory(searchParams.get("category"));
-  const limit = parseIntParam(searchParams.get("limit"), 20, 1, 50);
+  const { q, category, limit } = parsed.data;
 
   const supabase = createServerClient();
 
@@ -36,12 +46,13 @@ export async function GET(request: NextRequest) {
   }
 
   /* Fallback: ILIKE search on name and name_bg (no full-text ranking) */
+  const escaped = escapeIlike(q);
   let query = supabase
     .from("places")
     .select(
       "id, slug, name, name_bg, category, region, region_bg, image_url, description, description_bg, elevation_m, location"
     )
-    .or(`name.ilike.%${q}%,name_bg.ilike.%${q}%`)
+    .or(`name.ilike.%${escaped}%,name_bg.ilike.%${escaped}%`)
     .order("name")
     .limit(limit);
 

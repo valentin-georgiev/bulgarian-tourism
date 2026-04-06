@@ -1,55 +1,59 @@
 import { NextResponse } from "next/server";
-import { VALID_CATEGORIES } from "@/constants/categories";
+import type { NextRequest } from "next/server";
+
+const API_SECURITY_HEADERS: Record<string, string> = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
 
 /**
- * Return a JSON response with consistent structure.
+ * Return a JSON response with security headers.
  */
 export const jsonResponse = (body: unknown, status = 200) => {
-  return NextResponse.json(body, { status });
+  return NextResponse.json(body, { status, headers: API_SECURITY_HEADERS });
 };
 
 /**
- * Return a JSON error response.
+ * Return a JSON error response with security headers.
  */
 export const jsonError = (message: string, status = 400) => {
-  return NextResponse.json({ error: message }, { status });
+  return NextResponse.json({ error: message }, { status, headers: API_SECURITY_HEADERS });
 };
 
 /**
- * Safely parse an integer query param with bounds.
+ * Return a 429 Too Many Requests response.
  */
-export const parseIntParam = (
-  value: string | null,
-  defaultValue: number,
-  min: number,
-  max: number
-): number => {
-  if (!value) return defaultValue;
-  const n = parseInt(value, 10);
-  if (isNaN(n)) return defaultValue;
-  return Math.max(min, Math.min(max, n));
+export const jsonRateLimited = (retryAfter: number) => {
+  return NextResponse.json(
+    { error: "Too many requests" },
+    {
+      status: 429,
+      headers: {
+        ...API_SECURITY_HEADERS,
+        "Retry-After": String(retryAfter),
+      },
+    }
+  );
 };
 
 /**
- * Parse a bounding box string "south,west,north,east" into numbers.
- * Returns null if invalid.
+ * Extract client IP from request headers.
  */
-export const parseBbox = (
-  value: string | null
-): { south: number; west: number; north: number; east: number } | null => {
-  if (!value) return null;
-  const parts = value.split(",").map(Number);
-  if (parts.length !== 4 || parts.some(isNaN)) return null;
-  const [south, west, north, east] = parts;
-  if (south >= north || west >= east) return null;
-  if (south < -90 || north > 90 || west < -180 || east > 180) return null;
-  return { south, west, north, east };
+export const getClientIp = (request: NextRequest): string => {
+  return (
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+    request.headers.get("x-real-ip") ??
+    "unknown"
+  );
 };
 
 /**
- * Validate a category string. Returns null if invalid.
+ * Escape ILIKE special characters to prevent pattern injection.
  */
-export const validateCategory = (value: string | null): string | null => {
-  if (!value) return null;
-  return VALID_CATEGORIES.has(value) ? value : null;
+export const escapeIlike = (value: string): string => {
+  return value.replace(/[%_\\]/g, "\\$&");
 };
