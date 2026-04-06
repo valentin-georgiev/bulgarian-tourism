@@ -1,7 +1,9 @@
 import { type NextRequest } from "next/server";
 import { createServerClient } from "@/lib/supabase/server";
 import { parseWkbPoint } from "@/lib/parseWkb";
-import { jsonResponse, jsonError, parseIntParam, parseBbox, validateCategory } from "@/lib/api";
+import { jsonResponse, jsonError, jsonRateLimited, getClientIp } from "@/lib/api";
+import { placesQuerySchema } from "@/lib/api/validation";
+import { placesLimiter } from "@/lib/api/rateLimit";
 
 /**
  * GET /api/places
@@ -14,14 +16,25 @@ import { jsonResponse, jsonError, parseIntParam, parseBbox, validateCategory } f
  *   limit     — results per page (default 24, max 100)
  */
 export async function GET(request: NextRequest) {
+  const ip = getClientIp(request);
+  const rl = placesLimiter(ip);
+  if (rl.limited) return jsonRateLimited(rl.retryAfter);
+
   const { searchParams } = request.nextUrl;
 
-  const category = validateCategory(searchParams.get("category"));
-  const region = searchParams.get("region");
-  const bbox = parseBbox(searchParams.get("bbox"));
-  const page = parseIntParam(searchParams.get("page"), 1, 1, 1000);
-  const limit = parseIntParam(searchParams.get("limit"), 24, 1, 100);
+  const parsed = placesQuerySchema.safeParse({
+    category: searchParams.get("category") ?? undefined,
+    region: searchParams.get("region") ?? undefined,
+    bbox: searchParams.get("bbox") ?? undefined,
+    page: searchParams.get("page") ?? undefined,
+    limit: searchParams.get("limit") ?? undefined,
+  });
 
+  if (!parsed.success) {
+    return jsonError(parsed.error.issues.map((i) => i.message).join(", "), 400);
+  }
+
+  const { category, region, bbox, page, limit } = parsed.data;
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 

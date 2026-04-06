@@ -1,7 +1,9 @@
 import { type NextRequest } from "next/server";
 import { createServerClient } from "@/lib/supabase/server";
 import { parseWkbPoint } from "@/lib/parseWkb";
-import { jsonResponse, jsonError } from "@/lib/api";
+import { jsonResponse, jsonError, jsonRateLimited, getClientIp } from "@/lib/api";
+import { placeIdSchema } from "@/lib/api/validation";
+import { placesLimiter } from "@/lib/api/rateLimit";
 
 /**
  * GET /api/places/:id
@@ -9,7 +11,17 @@ import { jsonResponse, jsonError } from "@/lib/api";
  * Accepts a UUID or slug. Returns the place with nearby suggestions.
  */
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const ip = getClientIp(_request);
+  const rl = placesLimiter(ip);
+  if (rl.limited) return jsonRateLimited(rl.retryAfter);
+
   const { id } = await params;
+
+  const parsed = placeIdSchema.safeParse({ id });
+  if (!parsed.success) {
+    return jsonError("Invalid place identifier", 400);
+  }
+
   const supabase = createServerClient();
 
   /* Determine if id is a UUID or a slug */
