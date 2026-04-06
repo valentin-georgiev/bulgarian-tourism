@@ -17,16 +17,16 @@ Open-source portfolio project showcasing 5,000+ tourist destinations in Bulgaria
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 16 App Router |
-| Language | TypeScript (strict) |
-| Styling | Tailwind CSS v4 + SCSS |
-| Database | Supabase (PostgreSQL + PostGIS) |
-| i18n | next-intl |
-| Map | react-leaflet + leaflet.markercluster |
-| Icons | lucide-react |
-| Linting | ESLint + Prettier |
+| Layer     | Technology                            |
+| --------- | ------------------------------------- |
+| Framework | Next.js 16 App Router                 |
+| Language  | TypeScript (strict)                   |
+| Styling   | Tailwind CSS v4 + SCSS                |
+| Database  | Supabase (PostgreSQL + PostGIS)       |
+| i18n      | next-intl                             |
+| Map       | react-leaflet + leaflet.markercluster |
+| Icons     | lucide-react                          |
+| Linting   | ESLint + Prettier                     |
 
 ## Architecture
 
@@ -135,17 +135,17 @@ curl /api/search?q=rila
 
 PostgreSQL + PostGIS on Supabase. Key table: `places`.
 
-| Column | Type | Notes |
-|--------|------|-------|
-| id | uuid | Primary key |
-| name / name_bg | text | Bilingual names |
-| slug | text | URL-friendly identifier |
-| category | text | 9 categories (constrained) |
-| region / region_bg | text | Bulgarian oblast |
-| description / description_bg | text | Bilingual descriptions |
-| image_url | text | Wikimedia Commons |
-| location | geography(Point) | PostGIS for geo queries |
-| elevation_m | int | For peaks |
+| Column                       | Type             | Notes                      |
+| ---------------------------- | ---------------- | -------------------------- |
+| id                           | uuid             | Primary key                |
+| name / name_bg               | text             | Bilingual names            |
+| slug                         | text             | URL-friendly identifier    |
+| category                     | text             | 9 categories (constrained) |
+| region / region_bg           | text             | Bulgarian oblast           |
+| description / description_bg | text             | Bilingual descriptions     |
+| image_url                    | text             | Wikimedia Commons          |
+| location                     | geography(Point) | PostGIS for geo queries    |
+| elevation_m                  | int              | For peaks                  |
 
 **Migrations** (in `supabase/migrations/`):
 

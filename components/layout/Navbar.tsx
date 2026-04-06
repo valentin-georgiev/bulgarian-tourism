@@ -43,6 +43,12 @@ export default function Navbar() {
             >
               {t("map")}
             </Link>
+            <Link
+              href={`/${locale}/faq`}
+              className="hover:text-green-700 dark:hover:text-green-400 transition-colors"
+            >
+              {t("faq")}
+            </Link>
           </nav>
 
           {/* Right side: language switcher + theme toggle + mobile menu */}

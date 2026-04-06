@@ -56,6 +56,13 @@ const MobileMenu = () => {
               >
                 {t("map")}
               </Link>
+              <Link
+                href={`/${locale}/faq`}
+                onClick={close}
+                className="px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                {t("faq")}
+              </Link>
 
               <hr className="my-2 border-gray-200 dark:border-slate-700" />
 
