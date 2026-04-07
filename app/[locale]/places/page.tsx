@@ -4,6 +4,7 @@ import { createServerClient } from "@/lib/supabase/server";
 import { ALL_CATEGORIES, PAGE_SIZE } from "@/constants/categories";
 import PlaceGrid from "@/components/places/PlaceGrid";
 import PlaceFilters from "@/components/places/PlaceFilters";
+import { getAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 import type { Category } from "@/types/place";
 
@@ -21,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale === "bg"
         ? "Разгледайте планини, езера, пещери, градове и още в цяла България."
         : "Browse mountains, lakes, caves, cities, and more across Bulgaria.",
+    alternates: getAlternates(locale, "/places"),
   };
 }
 

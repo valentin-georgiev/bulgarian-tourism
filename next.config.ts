@@ -39,7 +39,7 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' *.tile.openstreetmap.org *.wikimedia.org upload.wikimedia.org data: blob:",
+              "img-src 'self' *.tile.openstreetmap.org *.supabase.co data: blob:",
               "connect-src 'self' *.supabase.co",
               "font-src 'self'",
             ].join("; "),
