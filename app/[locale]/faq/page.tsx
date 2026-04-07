@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { getAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 
 type Props = {
@@ -11,6 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("meta_description"),
+    alternates: getAlternates(locale, "/faq"),
   };
 }
 

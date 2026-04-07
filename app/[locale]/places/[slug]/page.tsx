@@ -6,6 +6,7 @@ import { ArrowLeft, MapPin, MountainSnow, Compass } from "lucide-react";
 import { createServerClient } from "@/lib/supabase/server";
 import { routing } from "@/i18n/routing";
 import { ALL_CATEGORIES } from "@/constants/categories";
+import { getAlternates } from "@/lib/seo";
 import Badge from "@/components/ui/Badge";
 import NearbyPlaces from "@/components/places/NearbyPlaces";
 import type { Metadata } from "next";
@@ -51,6 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: name,
     description: description?.slice(0, 160) ?? undefined,
     openGraph: place.image_url ? { images: [place.image_url] } : undefined,
+    alternates: getAlternates(locale, `/places/${slug}`),
   };
 }
 

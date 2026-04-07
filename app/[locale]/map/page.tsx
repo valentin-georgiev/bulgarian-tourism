@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { createServerClient } from "@/lib/supabase/server";
 import { parseWkbPoint } from "@/lib/parseWkb";
 import { ALL_CATEGORIES } from "@/constants/categories";
+import { getAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 import type { Category } from "@/types/place";
 import type { MapPlace } from "@/types/map";
@@ -14,7 +15,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "map" });
-  return { title: t("title") };
+  return { title: t("title"), alternates: getAlternates(locale, "/map") };
 }
 
 export default async function MapPage({ params }: Props) {

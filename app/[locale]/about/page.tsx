@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { getAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 
 type Props = {
@@ -11,6 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("meta_description"),
+    alternates: getAlternates(locale, "/about"),
   };
 }
 
@@ -40,7 +42,6 @@ export default async function AboutPage() {
         <ul className="list-disc list-inside space-y-1.5 text-sm text-gray-600 dark:text-slate-400">
           <li>{t("data_osm")}</li>
           <li>{t("data_wikidata")}</li>
-          <li>{t("data_wikimedia")}</li>
         </ul>
       </section>
 

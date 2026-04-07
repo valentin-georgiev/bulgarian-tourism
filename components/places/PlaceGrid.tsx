@@ -8,17 +8,21 @@ const PlaceGrid = ({ places, categoryLabels, locale, emptyMessage }: PlaceGridPr
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {places.map((place) => (
-        <PlaceCard
+      {places.map((place, i) => (
+        <div
           key={place.id}
-          slug={place.slug}
-          name={place.name}
-          category={place.category}
-          categoryLabel={categoryLabels[place.category]}
-          region={place.region}
-          image_url={place.image_url}
-          locale={locale}
-        />
+          className={`animate-fade-in ${i < 12 ? `stagger-${i + 1}` : "stagger-12"}`}
+        >
+          <PlaceCard
+            slug={place.slug}
+            name={place.name}
+            category={place.category}
+            categoryLabel={categoryLabels[place.category]}
+            region={place.region}
+            image_url={place.image_url}
+            locale={locale}
+          />
+        </div>
       ))}
     </div>
   );

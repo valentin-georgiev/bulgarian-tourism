@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { getAlternates } from "@/lib/seo";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import type { Metadata } from "next";
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       template: "%s | Bulgarian Tourism",
     },
     description: t("hero_subtitle"),
+    alternates: getAlternates(locale, ""),
   };
 }
 
