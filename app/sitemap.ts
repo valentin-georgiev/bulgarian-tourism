@@ -2,7 +2,7 @@ import { createServerClient } from "@/lib/supabase/server";
 import { routing } from "@/i18n/routing";
 import type { MetadataRoute } from "next";
 
-const SITE_URL = "https://bulgarian-tourism.vercel.app";
+const SITE_URL = process.env.DOMAIN_URL;
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const supabase = createServerClient();

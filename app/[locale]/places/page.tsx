@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { createServerClient } from "@/lib/supabase/server";
+import { getDistinctRegions } from "@/lib/supabase/queries";
 import { ALL_CATEGORIES, PAGE_SIZE } from "@/constants/categories";
 import PlaceGrid from "@/components/places/PlaceGrid";
 import PlaceFilters from "@/components/places/PlaceFilters";
@@ -54,13 +55,8 @@ export default async function PlacesPage({ params, searchParams }: Props) {
   if (category) placesQuery = placesQuery.eq("category", category);
   if (region) placesQuery = placesQuery.eq("region", region);
 
-  // Fetch places and regions in parallel (independent queries)
-  const [{ data: places }, { data: regionRows }] = await Promise.all([
-    placesQuery,
-    supabase.from("places").select("region").not("region", "is", null).order("region"),
-  ]);
-
-  const regions = [...new Set((regionRows ?? []).map((r) => r.region as string))];
+  // Fetch places and cached regions in parallel
+  const [{ data: places }, regions] = await Promise.all([placesQuery, getDistinctRegions()]);
 
   const displayPlaces = (places ?? []).map((p) => ({
     ...p,

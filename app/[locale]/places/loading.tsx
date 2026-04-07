@@ -8,8 +8,8 @@ export default function PlacesLoading() {
 
       {/* Filter bar skeleton */}
       <div className="flex flex-wrap gap-2 mb-8">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="h-9 w-20 rounded-full skeleton-shimmer" />
+        {["filter-1", "filter-2", "filter-3", "filter-4", "filter-5", "filter-6"].map((id) => (
+          <div key={id} className="h-9 w-20 rounded-full skeleton-shimmer" />
         ))}
       </div>
 
