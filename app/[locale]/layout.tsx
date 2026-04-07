@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import NextTopLoader from "nextjs-toploader";
 import { routing } from "@/i18n/routing";
 import { getAlternates } from "@/lib/seo";
 import Navbar from "@/components/layout/Navbar";
@@ -40,6 +41,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <NextTopLoader color="#15803d" height={2} showSpinner={false} />
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />

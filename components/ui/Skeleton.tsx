@@ -21,13 +21,11 @@ export const SkeletonText = ({ className = "" }: { className?: string }) => {
 };
 
 export const SkeletonGrid = ({ count = 8 }: { count?: number }) => {
-  /* eslint-disable react/no-array-index-key -- static placeholder items have no stable ID */
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {Array.from({ length: count }).map((_, i) => (
-        <SkeletonCard key={i} />
+      {Array.from({ length: count }, (_, i) => (
+        <SkeletonCard key={`skeleton-card-${i}`} />
       ))}
     </div>
   );
-  /* eslint-enable react/no-array-index-key */
 };

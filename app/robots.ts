@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = "https://bulgarian-tourism.vercel.app";
+const SITE_URL = process.env.DOMAIN_URL;
 
 const robots = (): MetadataRoute.Robots => ({
   rules: [
