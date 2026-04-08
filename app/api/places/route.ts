@@ -42,7 +42,7 @@ export const GET = async (request: NextRequest) => {
 
   /* If bbox is requested, use RPC with PostGIS filter */
   if (bbox) {
-    const { data, error } = await supabase.rpc("get_map_places");
+    const { data, error } = await supabase.rpc("get_map_places").limit(10000);
 
     if (error) {
       return jsonError("Database error", 500);

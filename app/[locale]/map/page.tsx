@@ -35,7 +35,7 @@ const MapPage = async ({ params }: Props) => {
   /* Try RPC first (requires migration 007), fall back to raw select + WKB parse */
   let places: MapPlace[] = [];
 
-  const { data: rpcData, error: rpcError } = await supabase.rpc("get_map_places");
+  const { data: rpcData, error: rpcError } = await supabase.rpc("get_map_places").limit(10000);
 
   if (!rpcError && rpcData) {
     places = (rpcData as Record<string, unknown>[]).map((row) => ({
@@ -63,7 +63,8 @@ const MapPage = async ({ params }: Props) => {
       .select(
         "id, name, name_bg, slug, category, image_url, region, region_bg, description, description_bg, elevation_m, location"
       )
-      .not("location", "is", null);
+      .not("location", "is", null)
+      .limit(10000);
 
     if (rawData) {
       places = rawData
