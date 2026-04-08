@@ -65,45 +65,6 @@ lib/        supabase/server.ts, api.ts, parseWkb.ts
 ### Prerequisites
 
 - Node.js 20+
-- A Supabase project with PostGIS enabled
-
-### Setup
-
-```bash
-git clone https://github.com/your-username/bulgarian-tourism.git
-cd bulgarian-tourism
-cp .env.example .env
-```
-
-Fill in `.env`:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-```
-
-### Install & Run
-
-```bash
-npm install
-npm run dev
-```
-
-### Seed the Database
-
-Run all migrations in `supabase/migrations/` via the Supabase SQL Editor, then:
-
-```bash
-npx tsx scripts/seed.ts
-```
-
-### Build
-
-```bash
-npm run build
-npm run start
-```
 
 ## API
 
@@ -141,20 +102,11 @@ PostgreSQL + PostGIS on Supabase. Key table: `places`.
 | name / name_bg               | text             | Bilingual names            |
 | slug                         | text             | URL-friendly identifier    |
 | category                     | text             | 9 categories (constrained) |
-| region / region_bg           | text             | Bulgarian oblast           |
+| region / region_bg           | text             | Bulgarian region           |
 | description / description_bg | text             | Bilingual descriptions     |
 | image_url                    | text             | Wikimedia Commons          |
 | location                     | geography(Point) | PostGIS for geo queries    |
 | elevation_m                  | int              | For peaks                  |
-
-**Migrations** (in `supabase/migrations/`):
-
-1. `001` — Initial schema + PostGIS indexes
-2. `002-005` — Category expansions, region_bg, schema refinement
-3. `006` — `nearby_places()` RPC
-4. `007` — `get_map_places()` RPC
-5. `008` — `search_places()` RPC (full-text)
-6. `009` — Row Level Security (read-only for anon)
 
 ## Data Sources
 
@@ -162,16 +114,6 @@ All data is sourced from open, free APIs:
 
 - **OpenStreetMap** via Overpass API — place coordinates, names, categories
 - **Wikidata** SPARQL — descriptions, images, elevation, regions
-- **Wikimedia Commons** — CC-licensed photos
-
-## Deployment
-
-Deploy to Vercel:
-
-1. Push to GitHub
-2. Import in Vercel
-3. Set environment variables (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`, `SUPABASE_SERVICE_ROLE_KEY`)
-4. Deploy
 
 ## License
 

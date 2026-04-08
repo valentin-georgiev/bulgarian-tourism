@@ -6,7 +6,7 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "about" });
   return {
@@ -14,9 +14,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: t("meta_description"),
     alternates: getAlternates(locale, "/about"),
   };
-}
+};
 
-export default async function AboutPage() {
+const AboutPage = async () => {
   const t = await getTranslations("about");
 
   return (
@@ -97,4 +97,6 @@ export default async function AboutPage() {
       </section>
     </div>
   );
-}
+};
+
+export default AboutPage;

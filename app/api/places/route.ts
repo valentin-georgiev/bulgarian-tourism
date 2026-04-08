@@ -15,7 +15,7 @@ import { placesLimiter } from "@/lib/api/rateLimit";
  *   page      — page number (default 1)
  *   limit     — results per page (default 24, max 100)
  */
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
   const ip = getClientIp(request);
   const rl = placesLimiter(ip);
   if (rl.limited) return jsonRateLimited(rl.retryAfter);
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
 
   /* If bbox is requested, use RPC with PostGIS filter */
   if (bbox) {
-    const { data, error } = await supabase.rpc("get_map_places");
+    const { data, error } = await supabase.rpc("get_map_places").limit(10000);
 
     if (error) {
       return jsonError("Database error", 500);
@@ -107,4 +107,4 @@ export async function GET(request: NextRequest) {
   });
 
   return jsonResponse({ data: places, page, limit, count: count ?? 0 });
-}
+};

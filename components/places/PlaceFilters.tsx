@@ -4,7 +4,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { ALL_CATEGORIES } from "@/constants/categories";
 import type { PlaceFiltersProps } from "@/types/components";
 
-const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions }: PlaceFiltersProps) => {
+const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions, locale }: PlaceFiltersProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -25,12 +25,12 @@ const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions }: PlaceFilters
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+    <div className="flex flex-col flex-row gap-4 items-start">
       {/* Category chips */}
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => setParam("category", "")}
-          className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+          className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer ${
             !activeCategory
               ? "bg-green-700 text-white border-green-700"
               : "bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-300 border-gray-200 dark:border-slate-600 hover:border-green-400"
@@ -42,7 +42,7 @@ const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions }: PlaceFilters
           <button
             key={cat}
             onClick={() => setParam("category", activeCategory === cat ? "" : cat)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+            className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer ${
               activeCategory === cat
                 ? "bg-green-700 text-white border-green-700"
                 : "bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-300 border-gray-200 dark:border-slate-600 hover:border-green-400"
@@ -62,8 +62,8 @@ const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions }: PlaceFilters
         >
           <option value="">{allRegionsLabel}</option>
           {regions.map((r) => (
-            <option key={r} value={r}>
-              {r}
+            <option key={r.region} value={r.region}>
+              {locale === "bg" && r.region_bg ? r.region_bg : r.region}
             </option>
           ))}
         </select>

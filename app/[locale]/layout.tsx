@@ -13,7 +13,7 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "home" });
   return {
@@ -24,13 +24,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: t("hero_subtitle"),
     alternates: getAlternates(locale, ""),
   };
-}
+};
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
+export const generateStaticParams = () => routing.locales.map((locale) => ({ locale }));
 
-export default async function LocaleLayout({ children, params }: Props) {
+const LocaleLayout = async ({ children, params }: Props) => {
   const { locale } = await params;
 
   if (!routing.locales.includes(locale as "en" | "bg")) {
@@ -47,4 +45,6 @@ export default async function LocaleLayout({ children, params }: Props) {
       <Footer />
     </NextIntlClientProvider>
   );
-}
+};
+
+export default LocaleLayout;

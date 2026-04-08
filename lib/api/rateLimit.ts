@@ -12,7 +12,7 @@ type RateLimitResult = {
  * In-memory sliding window rate limiter.
  * Appropriate for single-instance deployments (Vercel serverless).
  */
-function createRateLimiter(windowMs: number, maxRequests: number) {
+const createRateLimiter = (windowMs: number, maxRequests: number) => {
   const store = new Map<string, RateLimitEntry>();
 
   // Cleanup expired entries every 60 seconds
@@ -24,7 +24,7 @@ function createRateLimiter(windowMs: number, maxRequests: number) {
     }
   }, 60_000).unref();
 
-  return function check(key: string): RateLimitResult {
+  return (key: string): RateLimitResult => {
     const now = Date.now();
     const entry = store.get(key) ?? { timestamps: [] };
 
@@ -46,7 +46,7 @@ function createRateLimiter(windowMs: number, maxRequests: number) {
       retryAfter: 0,
     };
   };
-}
+};
 
 /** 60 requests per minute — for search endpoint */
 export const searchLimiter = createRateLimiter(60_000, 60);

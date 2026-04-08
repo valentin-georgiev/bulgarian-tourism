@@ -12,13 +12,13 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "map" });
   return { title: t("title"), alternates: getAlternates(locale, "/map") };
-}
+};
 
-export default async function MapPage({ params }: Props) {
+const MapPage = async ({ params }: Props) => {
   const { locale } = await params;
 
   const t = await getTranslations("map");
@@ -35,7 +35,7 @@ export default async function MapPage({ params }: Props) {
   /* Try RPC first (requires migration 007), fall back to raw select + WKB parse */
   let places: MapPlace[] = [];
 
-  const { data: rpcData, error: rpcError } = await supabase.rpc("get_map_places");
+  const { data: rpcData, error: rpcError } = await supabase.rpc("get_map_places").limit(10000);
 
   if (!rpcError && rpcData) {
     places = (rpcData as Record<string, unknown>[]).map((row) => ({
@@ -63,7 +63,8 @@ export default async function MapPage({ params }: Props) {
       .select(
         "id, name, name_bg, slug, category, image_url, region, region_bg, description, description_bg, elevation_m, location"
       )
-      .not("location", "is", null);
+      .not("location", "is", null)
+      .limit(10000);
 
     if (rawData) {
       places = rawData
@@ -107,4 +108,6 @@ export default async function MapPage({ params }: Props) {
       />
     </div>
   );
-}
+};
+
+export default MapPage;

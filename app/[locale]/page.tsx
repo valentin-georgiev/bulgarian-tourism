@@ -76,7 +76,7 @@ const HomePage = async ({ params }: Props) => {
           </h2>
           <p className="text-gray-600 dark:text-slate-400 leading-relaxed">{t("about_text")}</p>
           <a
-            href="https://github.com"
+            href="https://github.com/valentin-georgiev/bulgarian-tourism"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-6 text-sm font-medium text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 underline"

@@ -1,7 +1,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 
-export default function Footer() {
+const Footer = () => {
   const t = useTranslations("footer");
   const locale = useLocale();
 
@@ -36,4 +36,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

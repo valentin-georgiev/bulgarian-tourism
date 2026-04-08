@@ -14,7 +14,7 @@ import type { LucideIcon } from "lucide-react";
 
 /** Tailwind classes for Badge component */
 export const BADGE_STYLES: Record<Category, string> = {
-  mountain: "bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200",
+  mountain: "bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-200",
   lake: "bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-200",
   cave: "bg-amber-100 text-amber-700 dark:bg-amber-900/60 dark:text-amber-200",
   city: "bg-purple-100 text-purple-700 dark:bg-purple-900/60 dark:text-purple-200",

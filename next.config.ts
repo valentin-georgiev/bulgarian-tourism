@@ -5,12 +5,7 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
+    unoptimized: true,
   },
   async headers() {
     return [
@@ -39,7 +34,7 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' *.tile.openstreetmap.org *.supabase.co data: blob:",
+              "img-src 'self' *.tile.openstreetmap.org upload.wikimedia.org commons.wikimedia.org staticmap.openstreetmap.de data: blob:",
               "connect-src 'self' *.supabase.co",
               "font-src 'self'",
             ].join("; "),
