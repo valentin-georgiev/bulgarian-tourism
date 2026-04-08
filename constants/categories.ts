@@ -9,7 +9,6 @@ export const ALL_CATEGORIES: Category[] = [
   "trail",
   "beach",
   "museum",
-  "hiking",
 ];
 
 export const VALID_CATEGORIES: Set<string> = new Set(ALL_CATEGORIES);

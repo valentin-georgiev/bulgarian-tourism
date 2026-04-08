@@ -7,7 +7,6 @@ import {
   Footprints,
   Umbrella,
   Landmark,
-  TreePine,
 } from "lucide-react";
 import type { Category } from "@/types/place";
 import type { LucideIcon } from "lucide-react";
@@ -22,7 +21,6 @@ export const BADGE_STYLES: Record<Category, string> = {
   trail: "bg-green-100 text-green-700 dark:bg-green-900/60 dark:text-green-200",
   beach: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/60 dark:text-yellow-200",
   museum: "bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-200",
-  hiking: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-200",
 };
 
 /** Hex colors for map markers */
@@ -35,7 +33,6 @@ export const CATEGORY_COLORS: Record<Category, string> = {
   trail: "#22c55e",
   beach: "#eab308",
   museum: "#f43f5e",
-  hiking: "#10b981",
 };
 
 /** Active/inactive chip colors for map filters */
@@ -48,7 +45,6 @@ export const CHIP_COLORS: Record<Category, { active: string; inactive: string }>
   trail: { active: "bg-green-600 text-white", inactive: "bg-green-100 text-green-600" },
   beach: { active: "bg-yellow-600 text-white", inactive: "bg-yellow-100 text-yellow-600" },
   museum: { active: "bg-rose-600 text-white", inactive: "bg-rose-100 text-rose-600" },
-  hiking: { active: "bg-emerald-600 text-white", inactive: "bg-emerald-100 text-emerald-600" },
 };
 
 /** Category icons with colors for home page grid */
@@ -92,10 +88,5 @@ export const CATEGORY_ICONS: { key: Category; icon: LucideIcon; color: string }[
     key: "museum",
     icon: Landmark,
     color: "bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300",
-  },
-  {
-    key: "hiking",
-    icon: TreePine,
-    color: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300",
   },
 ];

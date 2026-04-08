@@ -49,7 +49,7 @@ const PlacesPage = async ({ params, searchParams }: Props) => {
   // Build places query with filters
   let placesQuery = supabase
     .from("places")
-    .select("id, slug, name, name_bg, category, region, image_url", { count: "exact" })
+    .select("id, slug, name, name_bg, category, region, region_bg, image_url", { count: "exact" })
     .order("name")
     .range(from, to);
 

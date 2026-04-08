@@ -6,8 +6,7 @@ export type Category =
   | "fishing"
   | "trail"
   | "beach"
-  | "museum"
-  | "hiking";
+  | "museum";
 
 export type Region = string;
 
