@@ -1,9 +1,13 @@
+"use client";
+
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
+import { useActiveLink } from "@/lib/useActiveLink";
 
 const Footer = () => {
   const t = useTranslations("footer");
   const locale = useLocale();
+  const { linkClass } = useActiveLink("footer");
 
   return (
     <footer className="bg-gray-50 dark:bg-slate-800/50 border-t border-gray-200 dark:border-slate-700 mt-auto transition-colors">
@@ -13,13 +17,13 @@ const Footer = () => {
           <nav className="flex items-center gap-4">
             <Link
               href={`/${locale}/about`}
-              className="hover:text-green-700 dark:hover:text-green-400 transition-colors"
+              className={linkClass(`/${locale}/about`)}
             >
               {t("about")}
             </Link>
             <Link
               href={`/${locale}/faq`}
-              className="hover:text-green-700 dark:hover:text-green-400 transition-colors"
+              className={linkClass(`/${locale}/faq`)}
             >
               {t("faq")}
             </Link>

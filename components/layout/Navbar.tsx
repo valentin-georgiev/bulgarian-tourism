@@ -5,10 +5,12 @@ import { useTranslations, useLocale } from "next-intl";
 import { Mountain } from "lucide-react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import MobileMenu from "@/components/layout/MobileMenu";
+import { useActiveLink } from "@/lib/useActiveLink";
 
 const Navbar = () => {
   const t = useTranslations("nav");
   const locale = useLocale();
+  const { linkClass } = useActiveLink("navbar");
 
   return (
     <header className="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border-b border-gray-200 dark:border-slate-700 shadow-sm transition-colors">
@@ -25,28 +27,19 @@ const Navbar = () => {
 
           {/* Nav links — desktop */}
           <nav className="hidden sm:flex items-center gap-6 text-sm font-medium text-gray-600 dark:text-slate-300">
-            <Link
-              href={`/${locale}`}
-              className="hover:text-green-700 dark:hover:text-green-400 transition-colors"
-            >
+            <Link href={`/${locale}`} className={linkClass(`/${locale}`)}>
               {t("home")}
             </Link>
-            <Link
-              href={`/${locale}/places`}
-              className="hover:text-green-700 dark:hover:text-green-400 transition-colors"
-            >
+            <Link href={`/${locale}/places`} className={linkClass(`/${locale}/places`)}>
               {t("places")}
             </Link>
-            <Link
-              href={`/${locale}/map`}
-              className="hover:text-green-700 dark:hover:text-green-400 transition-colors"
-            >
+            <Link href={`/${locale}/map`} className={linkClass(`/${locale}/map`)}>
               {t("map")}
             </Link>
-            <Link
-              href={`/${locale}/faq`}
-              className="hover:text-green-700 dark:hover:text-green-400 transition-colors"
-            >
+            <Link href={`/${locale}/about`} className={linkClass(`/${locale}/about`)}>
+              {t("about")}
+            </Link>
+            <Link href={`/${locale}/faq`} className={linkClass(`/${locale}/faq`)}>
               {t("faq")}
             </Link>
           </nav>

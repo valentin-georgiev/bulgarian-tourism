@@ -6,11 +6,13 @@ import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import { useActiveLink } from "@/lib/useActiveLink";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
   const locale = useLocale();
+  const { linkClass } = useActiveLink("mobile");
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -44,31 +46,34 @@ const MobileMenu = () => {
             {/* Menu panel */}
             <div className="fixed top-16 left-0 right-0 z-5000 sm:hidden bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 shadow-lg animate-slide-up">
               <nav className="flex flex-col px-4 py-4 gap-1">
-                <Link
-                  href={`/${locale}`}
-                  onClick={close}
-                  className="px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
-                >
+                <Link href={`/${locale}`} onClick={close} className={linkClass(`/${locale}`)}>
                   {t("home")}
                 </Link>
                 <Link
                   href={`/${locale}/places`}
                   onClick={close}
-                  className="px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                  className={linkClass(`/${locale}/places`)}
                 >
                   {t("places")}
                 </Link>
                 <Link
                   href={`/${locale}/map`}
                   onClick={close}
-                  className="px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                  className={linkClass(`/${locale}/map`)}
                 >
                   {t("map")}
                 </Link>
                 <Link
+                  href={`/${locale}/about`}
+                  onClick={close}
+                  className={linkClass(`/${locale}/about`)}
+                >
+                  {t("about")}
+                </Link>
+                <Link
                   href={`/${locale}/faq`}
                   onClick={close}
-                  className="px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                  className={linkClass(`/${locale}/faq`)}
                 >
                   {t("faq")}
                 </Link>
