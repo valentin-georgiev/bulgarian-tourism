@@ -13,7 +13,7 @@ import { searchLimiter } from "@/lib/api/rateLimit";
  *   category  — optional category filter
  *   limit     — max results (default 20, max 50)
  */
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
   const ip = getClientIp(request);
   const rl = searchLimiter(ip);
   if (rl.limited) return jsonRateLimited(rl.retryAfter);
@@ -84,4 +84,4 @@ export async function GET(request: NextRequest) {
   });
 
   return jsonResponse({ data: places, query: q });
-}
+};

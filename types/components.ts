@@ -33,7 +33,8 @@ export type PlaceGridProps = {
 export type PlaceFiltersProps = {
   categoryLabels: Record<"all" | Category, string>;
   allRegionsLabel: string;
-  regions: string[];
+  regions: { region: string; region_bg: string | null }[];
+  locale: string;
 };
 
 /* ─── NearbyPlaces ─── */
@@ -44,6 +45,18 @@ export type NearbyPlacesProps = {
   heading: string;
   emptyMessage: string;
   distanceLabel: (distance: string) => string;
+};
+
+/* ─── Pagination ─── */
+export type PaginationProps = {
+  currentPage: number;
+  totalPages: number;
+  baseParams: Record<string, string>;
+  labels: {
+    previous: string;
+    next: string;
+    page: string;
+  };
 };
 
 /* ─── Badge ─── */

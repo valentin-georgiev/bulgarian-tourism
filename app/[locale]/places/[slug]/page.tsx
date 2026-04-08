@@ -20,7 +20,7 @@ type Props = {
 
 /* ---------- static generation ---------- */
 
-export async function generateStaticParams() {
+export const generateStaticParams = async () => {
   const supabase = createServerClient();
   const { data } = await supabase.from("places").select("slug");
 
@@ -28,11 +28,11 @@ export async function generateStaticParams() {
 
   // Only return the slug segment — the parent layout handles locale
   return data.map((row) => ({ slug: row.slug }));
-}
+};
 
 /* ---------- metadata ---------- */
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale, slug } = await params;
   const supabase = createServerClient();
 
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: place.image_url ? { images: [place.image_url] } : undefined,
     alternates: getAlternates(locale, `/places/${slug}`),
   };
-}
+};
 
 /* ---------- helpers ---------- */
 
@@ -77,7 +77,7 @@ const parseLocation = (location: string): { lat: number; lng: number } | null =>
 
 /* ---------- page ---------- */
 
-export default async function PlaceDetailPage({ params }: Props) {
+const PlaceDetailPage = async ({ params }: Props) => {
   const { locale, slug } = await params;
 
   if (!routing.locales.includes(locale as "en" | "bg")) {
@@ -266,4 +266,6 @@ export default async function PlaceDetailPage({ params }: Props) {
       </div>
     </article>
   );
-}
+};
+
+export default PlaceDetailPage;

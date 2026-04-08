@@ -6,7 +6,7 @@ import { Mountain } from "lucide-react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import MobileMenu from "@/components/layout/MobileMenu";
 
-export default function Navbar() {
+const Navbar = () => {
   const t = useTranslations("nav");
   const locale = useLocale();
 
@@ -82,4 +82,6 @@ export default function Navbar() {
       </div>
     </header>
   );
-}
+};
+
+export default Navbar;

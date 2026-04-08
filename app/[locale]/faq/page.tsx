@@ -6,7 +6,7 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "faq" });
   return {
@@ -14,12 +14,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: t("meta_description"),
     alternates: getAlternates(locale, "/faq"),
   };
-}
+};
 
 type FAQItem = { question: string; answer: string };
 type FAQSection = { title: string; items: FAQItem[] };
 
-export default async function FAQPage() {
+const FAQPage = async () => {
   const t = await getTranslations("faq");
 
   const sections: FAQSection[] = [
@@ -101,4 +101,6 @@ export default async function FAQPage() {
       ))}
     </div>
   );
-}
+};
+
+export default FAQPage;

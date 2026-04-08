@@ -10,7 +10,10 @@ import { placesLimiter } from "@/lib/api/rateLimit";
  *
  * Accepts a UUID or slug. Returns the place with nearby suggestions.
  */
-export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export const GET = async (
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) => {
   const ip = getClientIp(_request);
   const rl = placesLimiter(ip);
   if (rl.limited) return jsonRateLimited(rl.retryAfter);
@@ -91,4 +94,4 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
   );
 
   return jsonResponse({ data: place, nearby });
-}
+};

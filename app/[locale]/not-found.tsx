@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
-export default async function LocaleNotFound() {
+const LocaleNotFound = async () => {
   const t = await getTranslations("error");
 
   return (
@@ -27,4 +27,6 @@ export default async function LocaleNotFound() {
       </div>
     </div>
   );
-}
+};
+
+export default LocaleNotFound;

@@ -5,6 +5,7 @@ import { getDistinctRegions } from "@/lib/supabase/queries";
 import { ALL_CATEGORIES, PAGE_SIZE } from "@/constants/categories";
 import PlaceGrid from "@/components/places/PlaceGrid";
 import PlaceFilters from "@/components/places/PlaceFilters";
+import Pagination from "@/components/ui/Pagination";
 import { getAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 import type { Category } from "@/types/place";
@@ -14,7 +15,7 @@ type Props = {
   searchParams: Promise<{ category?: string; region?: string; page?: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "places" });
   return {
@@ -25,9 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : "Browse mountains, lakes, caves, cities, and more across Bulgaria.",
     alternates: getAlternates(locale, "/places"),
   };
-}
+};
 
-export default async function PlacesPage({ params, searchParams }: Props) {
+const PlacesPage = async ({ params, searchParams }: Props) => {
   const { locale } = await params;
   const { category, region, page } = await searchParams;
 
@@ -36,7 +37,7 @@ export default async function PlacesPage({ params, searchParams }: Props) {
 
   const categoryLabels = {
     all: tc("all"),
-    ...Object.fromEntries(ALL_CATEGORIES.map((c) => [c, tc(c)])),
+    ...Object.fromEntries(ALL_CATEGORIES.map((category) => [category, tc(category)])),
   } as Record<"all" | Category, string>;
 
   const currentPage = Math.max(1, parseInt(page ?? "1", 10));
@@ -48,7 +49,7 @@ export default async function PlacesPage({ params, searchParams }: Props) {
   // Build places query with filters
   let placesQuery = supabase
     .from("places")
-    .select("id, slug, name, name_bg, category, region, image_url")
+    .select("id, slug, name, name_bg, category, region, image_url", { count: "exact" })
     .order("name")
     .range(from, to);
 
@@ -56,7 +57,8 @@ export default async function PlacesPage({ params, searchParams }: Props) {
   if (region) placesQuery = placesQuery.eq("region", region);
 
   // Fetch places and cached regions in parallel
-  const [{ data: places }, regions] = await Promise.all([placesQuery, getDistinctRegions()]);
+  const [{ data: places, count }, regions] = await Promise.all([placesQuery, getDistinctRegions()]);
+  const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE);
 
   const displayPlaces = (places ?? []).map((p) => ({
     ...p,
@@ -74,6 +76,7 @@ export default async function PlacesPage({ params, searchParams }: Props) {
             categoryLabels={categoryLabels}
             allRegionsLabel={t("all_regions")}
             regions={regions}
+            locale={locale}
           />
         </Suspense>
       </div>
@@ -86,16 +89,23 @@ export default async function PlacesPage({ params, searchParams }: Props) {
       />
 
       {/* Pagination */}
-      {(places ?? []).length === PAGE_SIZE && (
-        <div className="mt-12 flex justify-center">
-          <a
-            href={`?${new URLSearchParams({ ...(category ? { category } : {}), ...(region ? { region } : {}), page: String(currentPage + 1) })}`}
-            className="px-6 py-2 rounded-full bg-green-700 text-white text-sm font-medium hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700 transition-colors"
-          >
-            {t("load_more")}
-          </a>
-        </div>
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          baseParams={{
+            ...(category ? { category } : {}),
+            ...(region ? { region } : {}),
+          }}
+          labels={{
+            previous: t("pagination_previous"),
+            next: t("pagination_next"),
+            page: t("pagination_page"),
+          }}
+        />
       )}
     </div>
   );
-}
+};
+
+export default PlacesPage;

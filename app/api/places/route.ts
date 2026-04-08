@@ -15,7 +15,7 @@ import { placesLimiter } from "@/lib/api/rateLimit";
  *   page      — page number (default 1)
  *   limit     — results per page (default 24, max 100)
  */
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
   const ip = getClientIp(request);
   const rl = placesLimiter(ip);
   if (rl.limited) return jsonRateLimited(rl.retryAfter);
@@ -107,4 +107,4 @@ export async function GET(request: NextRequest) {
   });
 
   return jsonResponse({ data: places, page, limit, count: count ?? 0 });
-}
+};

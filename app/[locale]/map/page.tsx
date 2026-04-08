@@ -12,13 +12,13 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "map" });
   return { title: t("title"), alternates: getAlternates(locale, "/map") };
-}
+};
 
-export default async function MapPage({ params }: Props) {
+const MapPage = async ({ params }: Props) => {
   const { locale } = await params;
 
   const t = await getTranslations("map");
@@ -107,4 +107,6 @@ export default async function MapPage({ params }: Props) {
       />
     </div>
   );
-}
+};
+
+export default MapPage;
