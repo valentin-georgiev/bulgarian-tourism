@@ -19,6 +19,7 @@ export type PlaceItem = {
   name: string;
   category: Category;
   region: string | null;
+  region_bg: string | null;
   image_url: string | null;
 };
 

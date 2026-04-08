@@ -18,7 +18,7 @@ const PlaceGrid = ({ places, categoryLabels, locale, emptyMessage }: PlaceGridPr
             name={place.name}
             category={place.category}
             categoryLabel={categoryLabels[place.category]}
-            region={place.region}
+            region={locale === "bg" && place.region_bg ? place.region_bg : place.region}
             image_url={place.image_url}
             locale={locale}
           />
