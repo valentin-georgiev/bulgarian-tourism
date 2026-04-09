@@ -4,7 +4,7 @@ export const ALL_CATEGORIES: Category[] = [
   "mountain",
   "lake",
   "cave",
-  "city",
+  "settlement",
   "fishing",
   "trail",
   "beach",

@@ -1,13 +1,23 @@
 import { z } from "zod";
-import { ALL_CATEGORIES } from "@/constants/categories";
+import { ALL_CATEGORIES, VALID_CATEGORIES } from "@/constants/categories";
 
 const categoryEnum = z.enum(ALL_CATEGORIES as [string, ...string[]]);
+
+/** Accepts a single category or comma-separated list; filters out invalid values. */
+const categoryList = z
+  .string()
+  .optional()
+  .transform((val) => {
+    if (!val) return undefined;
+    const cats = val.split(",").filter((c) => VALID_CATEGORIES.has(c));
+    return cats.length ? cats : undefined;
+  });
 
 /**
  * Schema for GET /api/places query params.
  */
 export const placesQuerySchema = z.object({
-  category: categoryEnum.optional().catch(undefined),
+  category: categoryList,
   region: z.string().max(100).optional(),
   bbox: z
     .string()

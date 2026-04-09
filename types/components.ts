@@ -34,6 +34,7 @@ export type PlaceGridProps = {
 export type PlaceFiltersProps = {
   categoryLabels: Record<"all" | Category, string>;
   allRegionsLabel: string;
+  searchRegionLabel: string;
   regions: { region: string; region_bg: string | null }[];
   locale: string;
 };
