@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { ArrowLeft, MapPin, MountainSnow, Compass } from "lucide-react";
+import { MapPin, MountainSnow, Compass } from "lucide-react";
+import BackToPlaces from "@/components/places/BackToPlaces";
 import { createServerClient } from "@/lib/supabase/server";
 import { routing } from "@/i18n/routing";
 import { ALL_CATEGORIES } from "@/constants/categories";
@@ -182,13 +182,7 @@ const PlaceDetailPage = async ({ params }: Props) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
         {/* ---- Back link ---- */}
-        <Link
-          href={`/${locale}/places`}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          {t("back_to_places")}
-        </Link>
+        <BackToPlaces fallbackHref={`/${locale}/places`} label={t("back_to_places")} />
 
         {/* ---- Info bar ---- */}
         <div className="flex flex-wrap gap-6 text-sm text-gray-600 dark:text-slate-400">

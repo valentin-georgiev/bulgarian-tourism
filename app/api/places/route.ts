@@ -55,7 +55,7 @@ export const GET = async (request: NextRequest) => {
     );
 
     if (category) {
-      filtered = filtered.filter((p: { category: string }) => p.category === category);
+      filtered = filtered.filter((p: { category: string }) => category.includes(p.category));
     }
     if (region) {
       filtered = filtered.filter((p: { region: string | null }) => p.region === region);
@@ -77,7 +77,7 @@ export const GET = async (request: NextRequest) => {
     .order("name")
     .range(from, to);
 
-  if (category) query = query.eq("category", category);
+  if (category) query = query.in("category", category);
   if (region) query = query.eq("region", region);
 
   const { data, count, error } = await query;

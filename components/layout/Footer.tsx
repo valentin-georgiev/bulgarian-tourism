@@ -15,16 +15,10 @@ const Footer = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500 dark:text-slate-400">
           <p>{t("tagline")}</p>
           <nav className="flex items-center gap-4">
-            <Link
-              href={`/${locale}/about`}
-              className={linkClass(`/${locale}/about`)}
-            >
+            <Link href={`/${locale}/about`} className={linkClass(`/${locale}/about`)}>
               {t("about")}
             </Link>
-            <Link
-              href={`/${locale}/faq`}
-              className={linkClass(`/${locale}/faq`)}
-            >
+            <Link href={`/${locale}/faq`} className={linkClass(`/${locale}/faq`)}>
               {t("faq")}
             </Link>
             <a

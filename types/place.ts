@@ -2,7 +2,7 @@ export type Category =
   | "lake"
   | "mountain"
   | "cave"
-  | "city"
+  | "settlement"
   | "fishing"
   | "trail"
   | "beach"

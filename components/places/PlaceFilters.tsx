@@ -2,14 +2,22 @@
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { ALL_CATEGORIES } from "@/constants/categories";
+import SelectDropdown from "@/components/ui/SelectDropdown";
 import type { PlaceFiltersProps } from "@/types/components";
 
-const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions, locale }: PlaceFiltersProps) => {
+const PlaceFilters = ({
+  categoryLabels,
+  allRegionsLabel,
+  searchRegionLabel,
+  regions,
+  locale,
+}: PlaceFiltersProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const activeCategory = searchParams.get("category") ?? "";
+  const categoryParam = searchParams.get("category") ?? "";
+  const activeCategories = new Set(categoryParam ? categoryParam.split(",") : []);
   const activeRegion = searchParams.get("region") ?? "";
 
   const setParam = (key: string, value: string) => {
@@ -24,6 +32,16 @@ const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions, locale }: Plac
     router.push(`${pathname}?${params.toString()}`);
   };
 
+  const toggleCategory = (cat: string) => {
+    const next = new Set(activeCategories);
+    if (next.has(cat)) {
+      next.delete(cat);
+    } else {
+      next.add(cat);
+    }
+    setParam("category", [...next].join(","));
+  };
+
   return (
     <div className="flex flex-col flex-row gap-4 items-start">
       {/* Category chips */}
@@ -31,7 +49,7 @@ const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions, locale }: Plac
         <button
           onClick={() => setParam("category", "")}
           className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer ${
-            !activeCategory
+            activeCategories.size === 0
               ? "bg-green-700 text-white border-green-700"
               : "bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-300 border-gray-200 dark:border-slate-600 hover:border-green-400"
           }`}
@@ -41,9 +59,9 @@ const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions, locale }: Plac
         {ALL_CATEGORIES.map((cat) => (
           <button
             key={cat}
-            onClick={() => setParam("category", activeCategory === cat ? "" : cat)}
+            onClick={() => toggleCategory(cat)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer ${
-              activeCategory === cat
+              activeCategories.has(cat)
                 ? "bg-green-700 text-white border-green-700"
                 : "bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-300 border-gray-200 dark:border-slate-600 hover:border-green-400"
             }`}
@@ -55,18 +73,16 @@ const PlaceFilters = ({ categoryLabels, allRegionsLabel, regions, locale }: Plac
 
       {/* Region dropdown */}
       {regions.length > 0 && (
-        <select
+        <SelectDropdown
           value={activeRegion}
-          onChange={(e) => setParam("region", e.target.value)}
-          className="ml-auto text-sm border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-1.5 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-green-400"
-        >
-          <option value="">{allRegionsLabel}</option>
-          {regions.map((r) => (
-            <option key={r.region} value={r.region}>
-              {locale === "bg" && r.region_bg ? r.region_bg : r.region}
-            </option>
-          ))}
-        </select>
+          onChange={(val) => setParam("region", val)}
+          options={regions.map((r) => ({
+            value: r.region,
+            label: locale === "bg" && r.region_bg ? r.region_bg : r.region,
+          }))}
+          placeholder={allRegionsLabel}
+          searchPlaceholder={searchRegionLabel}
+        />
       )}
     </div>
   );

@@ -47,7 +47,7 @@ const HomePage = async ({ params }: Props) => {
 
       {/* Category cards */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-4">
           {CATEGORY_ICONS.map(({ key, icon, color }, index) => {
             const CategoryIcon = icon;
             return (

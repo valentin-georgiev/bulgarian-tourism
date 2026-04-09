@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { createServerClient } from "@/lib/supabase/server";
 import { getDistinctRegions } from "@/lib/supabase/queries";
-import { ALL_CATEGORIES, PAGE_SIZE } from "@/constants/categories";
+import { ALL_CATEGORIES, VALID_CATEGORIES, PAGE_SIZE } from "@/constants/categories";
 import PlaceGrid from "@/components/places/PlaceGrid";
 import PlaceFilters from "@/components/places/PlaceFilters";
 import Pagination from "@/components/ui/Pagination";
@@ -22,8 +22,8 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
     title: t("title"),
     description:
       locale === "bg"
-        ? "Разгледайте планини, езера, пещери, градове и още в цяла България."
-        : "Browse mountains, lakes, caves, cities, and more across Bulgaria.",
+        ? "Разгледайте планини, езера, пещери, населени места и още в цяла България."
+        : "Browse mountains, lakes, caves, settlements, and more across Bulgaria.",
     alternates: getAlternates(locale, "/places"),
   };
 };
@@ -53,7 +53,8 @@ const PlacesPage = async ({ params, searchParams }: Props) => {
     .order("name")
     .range(from, to);
 
-  if (category) placesQuery = placesQuery.eq("category", category);
+  const categories = category ? category.split(",").filter((c) => VALID_CATEGORIES.has(c)) : [];
+  if (categories.length) placesQuery = placesQuery.in("category", categories);
   if (region) placesQuery = placesQuery.eq("region", region);
 
   // Fetch places and cached regions in parallel
@@ -75,6 +76,7 @@ const PlacesPage = async ({ params, searchParams }: Props) => {
           <PlaceFilters
             categoryLabels={categoryLabels}
             allRegionsLabel={t("all_regions")}
+            searchRegionLabel={t("search_region")}
             regions={regions}
             locale={locale}
           />
